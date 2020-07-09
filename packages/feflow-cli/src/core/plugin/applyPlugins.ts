@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import osenv from 'osenv';
 import path from 'path';
 import { FEFLOW_ROOT } from '../../shared/constant';
-
+// 应用插件
 export default function applyPlugins(plugins: any) {
   return (ctx: any) => {
     if (!plugins.length) {
@@ -14,6 +14,7 @@ export default function applyPlugins(plugins: any) {
       const pluginPath = path.join(home, 'node_modules', name);
       try {
         ctx.logger.debug('Plugin loaded: %s', chalk.magenta(name));
+        // require该插件入口，并传入ctx
         return require(pluginPath)(ctx);
       } catch (err) {
         ctx.logger.error(

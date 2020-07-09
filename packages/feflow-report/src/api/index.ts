@@ -3,7 +3,7 @@ import { REPORT_URL, REPORT_PROXY, TIMEOUT } from '../constants';
 
 // sniff user network and save
 let isNeedProxyLocal = true;
-
+// 一个发接口的类
 export default class ApiController {
   private retryCount: number;
   private isNeedProxy: boolean;

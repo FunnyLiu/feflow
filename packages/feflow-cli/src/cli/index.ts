@@ -30,7 +30,7 @@ const checkNodeVersion = (wanted: any, id: string) => {
 const handleError = (err: any) => {
   process.exit(err?.status || 2);
 };
-
+// 输出helper
 const printBanner = () => {
   figlet.text(
     'feflow',
@@ -73,18 +73,18 @@ export default function entry() {
   const feflow = new Feflow(args);
   const { commander, logger } = feflow;
   let cmd: any = args._.shift();
-
+  // 输出版本
   if (!cmd && (args.v || args.version)) {
     feflow.reporter.report('version', args);
     console.log(chalk.green(pkg.version));
     return;
   }
-
+  // 输出helper
   if (!cmd && !args.h && !args.help) {
     printBanner();
     return;
   }
-
+  // 初始化传入的需要执行的命令
   return feflow.init(cmd).then(() => {
     const isInvalidCmd = !(cmd && (args.h || args.help));
     if (!args.h && !args.help) {
@@ -99,7 +99,7 @@ export default function entry() {
     }
 
     feflow.cmd = cmd;
-
+    //触发生命周期
     feflow.hook.emit(HOOK_TYPE_BEFORE);
 
     feflow.hook.on(EVENT_COMMAND_BEGIN, () => {

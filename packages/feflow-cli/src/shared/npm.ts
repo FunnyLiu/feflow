@@ -35,7 +35,7 @@ export function getRegistryUrl(packageManager: string) {
     });
   });
 }
-
+// 具体的npm install方法
 export function install(
   packageManager: string,
   root: any,

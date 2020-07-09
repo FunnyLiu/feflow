@@ -98,6 +98,7 @@ function deleteDir(dirPath: string) {
 }
 
 module.exports = (ctx: any) => {
+  // install 命令注册
   ctx.commander.register('install', 'Install a devkit or plugin', async () => {
     const dependencies = ctx.args['_'];
     const installPluginStr = dependencies[0];
@@ -112,7 +113,7 @@ module.exports = (ctx: any) => {
       process.exit(2);
     }
   });
-
+  // uninstall 命令注册
   ctx.commander.register(
     'uninstall',
     'Uninstall a devkit or plugin',
@@ -142,7 +143,7 @@ function isGitRepo(url: string): boolean {
     /^http(s)?:\/\/.+\/.+\/.+\.git$/.test(url)
   );
 }
-
+// 安装npm插件
 async function installNpmPlugin(ctx: any, ...dependencies: string[]) {
   const packageManager = ctx?.config?.packageManager;
   const registryUrl = await getRegistryUrl(packageManager);
@@ -159,7 +160,7 @@ async function installNpmPlugin(ctx: any, ...dependencies: string[]) {
   );
 
   ctx.logger.info('Installing packages. This might take a couple of minutes.');
-
+  // 安排对应的npm包
   return install(
     packageManager,
     ctx.root,
@@ -244,7 +245,7 @@ async function installJsPlugin(ctx: any, installPlugin: string) {
     return await applyPlugins([installPlugin])(ctx);
   }
 }
-
+// 具体的安装插件逻辑
 async function installPlugin(
   ctx: any,
   installPluginStr: string,
@@ -525,6 +526,7 @@ async function uninstallNpmPlugin(ctx: any, dependencies: []) {
   dependencies.forEach((pkg: string) => {
     const npmPluginInfoPath = path.join(root, NPM_PLUGIN_INFO_JSON);
     try {
+      // 如果存在该路径
       if (fs.existsSync(npmPluginInfoPath)) {
         const npmPluginInfo = require(npmPluginInfoPath);
         const pluginGlobalCmd = npmPluginInfo?.[pkg]?.globalCmd || [];

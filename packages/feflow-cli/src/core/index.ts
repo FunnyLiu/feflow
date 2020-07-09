@@ -70,10 +70,12 @@ export default class Feflow {
     this.commander = new Commander((cmdName: string) => {
       this.hook.emit(HOOK_TYPE_ON_COMMAND_REGISTERED, cmdName);
     });
+    // logger初始
     this.logger = logger({
       debug: Boolean(args.debug),
       silent: Boolean(args.silent)
     });
+    // 初始化Reporter，在feflow-report中
     this.reporter = new Report(this);
     this.universalPkg = new UniversalPkg(this.universalPkgPath);
     this.initBinPath();
@@ -95,7 +97,9 @@ export default class Feflow {
         // await this.checkUniversalPluginAndUpdate();
       }
       await this.loadNative();
+      // 加载内建的插件
       await this.loadInternalPlugins();
+      // 加载插件
       await loadPlugins(this);
       await loadUniversalPlugin(this);
       await loadDevkits(this);
@@ -354,7 +358,7 @@ export default class Feflow {
       resolve();
     });
   }
-
+  // 加载内建的一些插件
   loadInternalPlugins() {
     ['@feflow/feflow-plugin-devtool'].map((name: string) => {
       try {

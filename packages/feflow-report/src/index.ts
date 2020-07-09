@@ -22,7 +22,7 @@ interface ReportContext {
 interface ReportBody {
   [key: string]: any;
 }
-
+// 各种系统、用户信息上报
 class Report {
   ctx: ReportContext;
   costTime: number;
@@ -113,6 +113,7 @@ class Report {
       this.registerHook();
     }
   }
+  // 发送接口上报
   report(cmd, args?) {
     // args check
     if (!this.checkBeforeReport(cmd)) return;
